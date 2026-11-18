@@ -1,6 +1,6 @@
-# SOFTLAND Land Tax PWA
+# ভূমি উন্নয়ন করের (আনুমানিক) হিসাব
 
-Mobile-first Bengali land-tax estimate webpage for iPhone Home Screen.
+Mobile-first Bengali land-tax estimate webpage for iPhone Home Screen. This is a standalone calculator and is not branded as SOFTLAND.
 
 ## GitHub Pages
 1. Upload all project files to repository root.
