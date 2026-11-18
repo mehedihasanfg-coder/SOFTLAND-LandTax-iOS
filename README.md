@@ -12,7 +12,8 @@ Mobile-first Bengali land-tax estimate webpage for iPhone Home Screen. This is a
 ## iPhone 12
 Open the published URL in Safari → Share → Add to Home Screen → Add.
 
-## Assumptions
-Annual base demand = Nal × 2 + Residential × 10 + Commercial/Industrial × 50. Selected year Y means FY Y-(Y+1) was paid; arrears start 1 July Y+1. Current fiscal year is shown separately; completed unpaid years are split into latest three and older years. Penalty is an estimated 6.25% simple annual charge weighted by each unpaid year's age. This is not verified official tax methodology. No user-entered values or calculation results are stored; the service worker caches only static app files.
+## Offline use
+Open the published app once while online and wait for it to finish loading. The service worker pre-caches the app page, stylesheet, calculator script, and manifest. After that, reopen the Home Screen app while offline. The calculator runs locally and does not need an internet connection for calculations. If the app was already installed/open before an update, open it once online to receive the updated offline cache.
 
-Rates are user-configured estimates, not verified official government rates.
+## Privacy and assumptions
+No user-entered values or calculation results are stored. The service worker caches only the static app files. Current rates and penalty calculations are estimates and are not verified official government calculations.
