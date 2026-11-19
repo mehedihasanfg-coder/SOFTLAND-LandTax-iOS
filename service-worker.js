@@ -1,10 +1,11 @@
-const CACHE_NAME = "land-tax-calculator-offline-v5";
+const CACHE_NAME = "land-tax-calculator-offline-v6";
 const APP_FILES = [
   "./",
   "./index.html",
   "./style.css",
   "./app.js",
-  "./manifest.webmanifest"
+  "./manifest.webmanifest",
+  "./app-icon.svg"
 ];
 
 self.addEventListener("install", event => {
