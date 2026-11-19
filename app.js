@@ -1,6 +1,6 @@
 (()=>{
 const $=id=>document.getElementById(id);
-const fmt=n=>"৳ "+new Intl.NumberFormat("en-BD",{maximumFractionDigits:2}).format(n);
+const fmt=n=>"৳ "+new Intl.NumberFormat("en-BD",{maximumFractionDigits:0}).format(n);
 const val=id=>{const n=parseFloat($(id).value.replace(/,/g,"."));return Number.isFinite(n)&&n>0?n:0};
 const now=new Date();
 const cy=now.getMonth()>=6?now.getFullYear():now.getFullYear()-1;
@@ -38,8 +38,18 @@ function calc(){
   const arrears=Math.max(0,cy-first);
   const recent=Math.min(3,arrears);
   const older=Math.max(0,arrears-3);
-  const penalty=annual*.0625*(arrears*(arrears+1)/2);
-  const total=annual+annual*arrears+penalty;
+  // Approximation: use the current annual rate for each unpaid year.
+  // Under Land Development Tax Act 2023, section 9(2), 6.25% applies
+  // annually to the first three consecutive arrears years only.
+  // Round each annual tax and each year's penalty up to the next whole taka.
+  const annualRounded=Math.ceil(annual);
+  const recentDue=annualRounded*recent;
+  const olderDue=annualRounded*older;
+  let penalty=0;
+  for(let age=1;age<=Math.min(3,arrears);age++){
+    penalty+=Math.ceil(annualRounded*0.0625*age);
+  }
+  const total=annualRounded+recentDue+olderDue+penalty;
 
   $("paidText").textContent="আপনি "+fy(paid)+" অর্থবছরের কর পরিশোধ করেছেন ধরা হয়েছে।";
   $("startText").textContent="বকেয়া হিসাব শুরু: ১ জুলাই "+first;
@@ -52,9 +62,9 @@ function calc(){
   $("currentLabel").textContent="("+fy(cy)+" — ১ বছর)";
   $("recentLabel").textContent="("+recent+" বছর)";
   $("olderLabel").textContent="("+older+" বছর)";
-  $("currentAmount").textContent=fmt(annual);
-  $("recentAmount").textContent=fmt(annual*recent);
-  $("olderAmount").textContent=fmt(annual*older);
+  $("currentAmount").textContent=fmt(annualRounded);
+  $("recentAmount").textContent=fmt(recentDue);
+  $("olderAmount").textContent=fmt(olderDue);
   $("penaltyAmount").textContent=fmt(penalty);
   $("totalAmount").textContent=fmt(total);
 }
