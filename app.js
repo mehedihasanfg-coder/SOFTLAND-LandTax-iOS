@@ -22,6 +22,11 @@ function calc(){
   const rates=rateTable[$("areaType").value]||rateTable.union;
   const n=val("nal"),r=val("res"),c=val("com");
   const annual=n*rates.nal+r*rates.res+c*rates.com;
+  $("rateNal").textContent=fmt(rates.nal);
+  $("rateRes").textContent=fmt(rates.res);
+  $("rateCom").textContent=fmt(rates.com);
+  $("rateInd").textContent=fmt(rates.ind);
+  $("areaTotal").textContent=(n+r+c).toFixed(2)+" শতাংশ";
   const paidValue=$("paidYear").value;
   if(!paidValue){
     $("paidText").textContent="";$("startText").textContent="";
@@ -36,11 +41,6 @@ function calc(){
   const penalty=annual*.0625*(arrears*(arrears+1)/2);
   const total=annual+annual*arrears+penalty;
 
-  $("rateNal").textContent=fmt(rates.nal);
-  $("rateRes").textContent=fmt(rates.res);
-  $("rateCom").textContent=fmt(rates.com);
-  $("rateInd").textContent=fmt(rates.ind);
-  $("areaTotal").textContent=(n+r+c).toFixed(2)+" শতাংশ";
   $("paidText").textContent="আপনি "+fy(paid)+" অর্থবছরের কর পরিশোধ করেছেন ধরা হয়েছে।";
   $("startText").textContent="বকেয়া হিসাব শুরু: ১ জুলাই "+first;
   $("selected").textContent=fy(paid);
