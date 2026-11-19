@@ -4,20 +4,20 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#075322"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="ভূমি কর">
-<link rel="manifest" href="./manifest.webmanifest"><link rel="stylesheet" href="./style.css?v=4"><title>ভূমি উন্নয়ন করের (আনুমানিক) হিসাব</title>
+<link rel="manifest" href="./manifest.webmanifest"><link rel="apple-touch-icon" href="./app-icon.svg"><link rel="icon" type="image/svg+xml" href="./app-icon.svg"><link rel="stylesheet" href="./style.css?v=5"><title>ভূমি উন্নয়ন করের (আনুমানিক) হিসাব</title>
 </head>
 <body><main class="app">
-<header><div class="mark">⌂</div><div><h1>ভূমি উন্নয়ন করের (আনুমানিক) হিসাব</h1><p>খতিয়ানভিত্তিক ভূমি কর নির্ণয়</p></div></header>
+<header><div class="headerText"><h1>ভূমি উন্নয়ন করের (আনুমানিক) হিসাব</h1><p>খতিয়ানভিত্তিক ভূমি কর নির্ণয়</p></div></header>
 <section class="card"><h2>♟ জমির পরিমাণ লিখুন</h2><p class="hint">সকল দাগের একই শ্রেণির জমি একত্র করে শতাংশে লিখুন।</p>
-<div class="area"><label for="nal">🌱 নাল জমি (কৃষি২)</label><input id="nal" inputmode="decimal" value="20"><span>শতাংশ</span></div>
-<div class="area"><label for="res">🏠 আবাসিক জমি</label><input id="res" inputmode="decimal" value="10"><span>শতাংশ</span></div>
-<div class="area"><label for="com">🏢 বাণিজ্যিক / শিল্প জমি</label><input id="com" inputmode="decimal" value="5"><span>শতাংশ</span></div>
+<div class="area"><label for="nal">🌱 নাল জমি (কৃষি২)</label><input id="nal" inputmode="decimal" placeholder="০০০"><span>শতাংশ</span></div>
+<div class="area"><label for="res">🏠 আবাসিক জমি</label><input id="res" inputmode="decimal" placeholder="০০০"><span>শতাংশ</span></div>
+<div class="area"><label for="com">🏢 বাণিজ্যিক / শিল্প জমি</label><input id="com" inputmode="decimal" placeholder="০০০"><span>শতাংশ</span></div>
 <div class="total"><b>মোট জমির পরিমাণ</b><b id="areaTotal">35.00 শতাংশ</b></div></section>
 <section class="card"><h2>▦ সর্বশেষ কর পরিশোধের বছর <button class="info" data-info="নির্বাচিত বছরকে পরিশোধিত অর্থবছরের শুরুর সাল ধরা হয়। যেমন ১৯৪৩ মানে ১৯৪৩-৪৪ পরিশোধিত; বকেয়া শুরু ১ জুলাই ১৯৪৪।">i</button></h2>
-<select id="paidYear" aria-label="সর্বশেষ কর পরিশোধের বছর"></select><p id="paidText"></p><p id="startText" class="blue"></p></section>
+<select id="paidYear" aria-label="সর্বশেষ কর পরিশোধের বছর"><option value="" selected disabled>নির্বাচন করুন</option></select><p id="paidText"></p><p id="startText" class="blue"></p></section>
 <section class="card"><h2>▥ এলাকার ধরন ও করের হার</h2><div class="areaType"><label>এলাকার ধরন</label><div class="areaPicker"><button type="button" id="areaTypeButton" class="areaPickerButton" aria-expanded="false">ইউনিয়ন পরিষদ <span aria-hidden="true">⌄</span></button><div id="areaTypeOptions" class="areaPickerOptions" hidden><button type="button" data-area-value="union">ইউনিয়ন পরিষদ</button><button type="button" data-area-value="municipality">পৌরসভা (Municipality)</button><button type="button" data-area-value="city">সিটি কর্পোরেশন</button></div></div><select id="areaType" aria-hidden="true" tabindex="-1"><option value="union">ইউনিয়ন পরিষদ</option><option value="municipality">পৌরসভা (Municipality)</option><option value="city">সিটি কর্পোরেশন</option></select></div>
 <div class="rates"><div><span>নাল (কৃষি২)</span><b id="rateNal">৳ ২</b><small>প্রতি শতাংশ</small></div><div><span>আবাসিক</span><b id="rateRes">৳ ১০</b><small>প্রতি শতাংশ</small></div><div><span>বাণিজ্যিক</span><b id="rateCom">৳ ৫০</b><small>প্রতি শতাংশ</small></div><div><span>শিল্প</span><b id="rateInd">৳ ৫০</b><small>প্রতি শতাংশ</small></div></div><p class="warning">হারগুলো আপনার নির্ধারিত আনুমানিক হার।</p></section>
-<section class="card"><h2>▦ বকেয়ার বিবরণ <em>(স্বয়ংক্রিয় হিসাব)</em></h2><div class="breakdown">
+<button type="button" class="resultsToggle" id="showResults" aria-expanded="false">Results/ ফলাফল</button><div id="resultPanel" hidden><section class="card"><h2>▦ বকেয়ার বিবরণ <em>(স্বয়ংক্রিয় হিসাব)</em></h2><div class="breakdown">
 <p>নির্বাচিত বছর: <b id="selected"></b></p><p>বকেয়া হিসাব শুরু: <b id="start"></b></p><p>বর্তমান অর্থবছর: <b id="currentFY"></b></p><p>মোট বকেয়া অর্থবছর: <b id="count"></b></p><b>বিভাজন:</b><p>• হাল দাবি (বর্তমান): <b>১ বছর</b></p><p>• গত তিন বছরের বকেয়া: <b id="recentYears"></b></p><p>• তিন বছরের ঊর্ধ্বে বকেয়া: <b id="olderYears"></b></p></div></section>
 <section class="card"><h2>▤ হিসাবের ফলাফল</h2><div class="results">
 <div><span>১। হাল দাবি <small id="currentLabel"></small></span><b id="currentAmount"></b></div>
@@ -25,5 +25,5 @@
 <div><span>৩। তিন বছরের ঊর্ধ্বে বকেয়া <small id="olderLabel"></small></span><b id="olderAmount"></b></div>
 <div><span>৪। বকেয়ার জরিমানা ও ক্ষতিপূরণ <button class="info" data-info="এখানে ৬.২৫% বার্ষিক সরল সুদের অনুমান ব্যবহার করা হয়েছে; সরকারি সূত্র যাচাই করুন।">i</button></span><b id="penaltyAmount"></b></div>
 </div><div class="grand"><b>৫। সর্বমোট দাবি (১+২+৩+৪)</b><strong id="totalAmount"></strong></div></section>
-<button class="clear" id="clear">⟳　Clear / মুছে ফেলুন</button><p class="privacy">এই অ্যাপ কোনো তথ্য সংরক্ষণ করে না। Clear চাপলে সব ইনপুট মুছে যাবে।</p><p class="warning center">এটি সরকারি হিসাবের বিকল্প নয়।</p>
-</main><div id="toast" role="status"></div><script src="./app.js?v=4"></script></body></html>
+</div><button class="clear" id="clear">⟳　Clear / মুছে ফেলুন</button><p class="privacy">এই অ্যাপ কোনো তথ্য সংরক্ষণ করে না। Clear চাপলে সব ইনপুট মুছে যাবে।</p><p class="warning center">এটি সরকারি হিসাবের বিকল্প নয়।</p>
+</main><div id="toast" role="status"></div><script src="./app.js?v=5"></script></body></html>
