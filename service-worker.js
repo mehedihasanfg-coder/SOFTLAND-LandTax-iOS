@@ -1,4 +1,4 @@
-const CACHE_NAME = "land-tax-calculator-offline-v3";
+const CACHE_NAME = "land-tax-calculator-offline-v4";
 const APP_FILES = [
   "./",
   "./index.html",
@@ -25,26 +25,24 @@ self.addEventListener("activate", event => {
   );
 });
 
+// Network-first keeps the published app current; cached files remain available offline.
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
-
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
   event.respondWith((async () => {
-    const cached = await caches.match(request);
-    if (cached) return cached;
-
     try {
-      const response = await fetch(request);
+      const response = await fetch(request, { cache: "no-store" });
       if (response && response.ok) {
-        const copy = response.clone();
         const cache = await caches.open(CACHE_NAME);
-        await cache.put(request, copy);
+        await cache.put(request, response.clone());
       }
       return response;
     } catch (error) {
+      const cached = await caches.match(request);
+      if (cached) return cached;
       if (request.mode === "navigate") {
         return (await caches.match("./index.html")) || Response.error();
       }
