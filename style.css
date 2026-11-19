@@ -18,3 +18,14 @@ header{justify-content:center;text-align:center}
 header h1{font-size:clamp(25px,6.2vw,34px);line-height:1.35}
 @media(max-width:370px){header h1{font-size:23px}}
 .resultsToggle{display:block;width:100%;border:0;border-radius:10px;background:linear-gradient(90deg,#07863d,#00652b);color:#fff;font-size:19px;font-weight:750;padding:14px;margin:8px 0 3px;touch-action:manipulation}
+
+/* Area type label and picker sizing: keep Union Parishad on one line. */
+.areaType label{font-size:18px;font-weight:750;white-space:nowrap}
+.areaPicker{width:68%;min-width:0;flex:0 0 68%}
+.areaPickerButton{white-space:nowrap;flex-wrap:nowrap;padding-left:12px;padding-right:12px}
+.areaPickerButton span{flex:0 0 auto}
+@media(max-width:370px){
+  .areaType label{font-size:16px}
+  .areaPicker{width:70%;flex-basis:70%}
+  .areaPickerButton{font-size:16px;padding-left:9px;padding-right:9px}
+}
