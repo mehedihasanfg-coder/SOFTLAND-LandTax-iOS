@@ -52,13 +52,27 @@ function calc(){
   $("penaltyAmount").textContent=fmt(penalty);
   $("totalAmount").textContent=fmt(total);
 }
-["nal","res","com","paidYear","areaType"].forEach(id=>{
+["nal","res","com","paidYear"].forEach(id=>{
   $(id).addEventListener("input",calc);
   $(id).addEventListener("change",calc);
 });
+const areaButton=$("areaTypeButton");
+const areaOptions=$("areaTypeOptions");
+areaButton.addEventListener("click",()=>{
+  const opening=areaOptions.hidden;
+  areaOptions.hidden=!opening;
+  areaButton.setAttribute("aria-expanded",String(opening));
+});
+areaOptions.querySelectorAll("[data-area-value]").forEach(option=>option.addEventListener("click",()=>{
+  $("areaType").value=option.dataset.areaValue;
+  areaButton.innerHTML=areaNames[option.dataset.areaValue]+' <span aria-hidden="true">⌄</span>';
+  areaOptions.hidden=true;
+  areaButton.setAttribute("aria-expanded","false");
+  calc();
+}));
 $("clear").onclick=()=>{
   $("nal").value="";$("res").value="";$("com").value="";
-  $("areaType").value="union";$("paidYear").value=String(cy);
+  $("areaType").value="union";areaButton.innerHTML=areaNames.union+' <span aria-hidden="true">⌄</span>';areaOptions.hidden=true;areaButton.setAttribute("aria-expanded","false");$("paidYear").value=String(cy);
   $("areaTotal").textContent="0.00 শতাংশ";
   ["selected","start","currentFY","count","recentYears","olderYears","currentLabel","recentLabel","olderLabel","currentAmount","recentAmount","olderAmount","penaltyAmount","totalAmount"].forEach(id=>$(id).textContent="—");
   $("paidText").textContent="";$("startText").textContent="";
