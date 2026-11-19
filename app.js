@@ -11,18 +11,24 @@ const toast=m=>{$("toast").textContent=m;$("toast").classList.add("show");setTim
 const rateTable={
   union:{nal:2,res:10,com:50,ind:50},
   municipality:{nal:2,res:40,com:120,ind:120},
-  city:{nal:2,res:100,com:250,ind:250}
+  city:{nal:50,res:50,com:250,ind:250}
 };
 const areaNames={union:"ইউনিয়ন পরিষদ",municipality:"পৌরসভা",city:"সিটি কর্পোরেশন"};
 for(let y=1910;y<=cy;y++){
   const o=document.createElement("option");o.value=y;o.textContent=y;$("paidYear").append(o);
 }
-$("paidYear").value=String(Math.min(1943,cy));
+$("paidYear").value="";
 function calc(){
   const rates=rateTable[$("areaType").value]||rateTable.union;
   const n=val("nal"),r=val("res"),c=val("com");
   const annual=n*rates.nal+r*rates.res+c*rates.com;
-  const paid=+$("paidYear").value;
+  const paidValue=$("paidYear").value;
+  if(!paidValue){
+    $("paidText").textContent="";$("startText").textContent="";
+    ["selected","start","currentFY","count","recentYears","olderYears","currentLabel","recentLabel","olderLabel","currentAmount","recentAmount","olderAmount","penaltyAmount","totalAmount"].forEach(id=>$(id).textContent="—");
+    return;
+  }
+  const paid=Number(paidValue);
   const first=paid+1;
   const arrears=Math.max(0,cy-first);
   const recent=Math.min(3,arrears);
@@ -56,6 +62,13 @@ function calc(){
   $(id).addEventListener("input",calc);
   $(id).addEventListener("change",calc);
 });
+const resultsButton=$("showResults");
+const resultPanel=$("resultPanel");
+resultsButton.addEventListener("click",()=>{
+  const opening=resultPanel.hidden;
+  resultPanel.hidden=!opening;
+  resultsButton.setAttribute("aria-expanded",String(opening));
+});
 const areaButton=$("areaTypeButton");
 const areaOptions=$("areaTypeOptions");
 areaButton.addEventListener("click",()=>{
@@ -72,7 +85,8 @@ areaOptions.querySelectorAll("[data-area-value]").forEach(option=>option.addEven
 }));
 $("clear").onclick=()=>{
   $("nal").value="";$("res").value="";$("com").value="";
-  $("areaType").value="union";areaButton.innerHTML=areaNames.union+' <span aria-hidden="true">⌄</span>';areaOptions.hidden=true;areaButton.setAttribute("aria-expanded","false");$("paidYear").value=String(cy);
+  $("areaType").value="union";areaButton.innerHTML=areaNames.union+' <span aria-hidden="true">⌄</span>';areaOptions.hidden=true;areaButton.setAttribute("aria-expanded","false");$("paidYear").value="";
+  resultPanel.hidden=true;resultsButton.setAttribute("aria-expanded","false");
   $("areaTotal").textContent="0.00 শতাংশ";
   ["selected","start","currentFY","count","recentYears","olderYears","currentLabel","recentLabel","olderLabel","currentAmount","recentAmount","olderAmount","penaltyAmount","totalAmount"].forEach(id=>$(id).textContent="—");
   $("paidText").textContent="";$("startText").textContent="";
