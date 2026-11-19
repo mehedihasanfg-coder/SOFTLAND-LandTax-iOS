@@ -1,4 +1,4 @@
-const CACHE_NAME = "land-tax-calculator-offline-v4";
+const CACHE_NAME = "land-tax-calculator-offline-v5";
 const APP_FILES = [
   "./",
   "./index.html",
